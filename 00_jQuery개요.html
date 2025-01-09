@@ -89,7 +89,7 @@
 </script>
 <h4>append를 이용해서 추가하기</h4>
 <table>
-    <tr id="#addCar">
+    <tr id="addCar">
         <td>소나타</td>
         <td>k3</td>
         <td>아반떼</td>
@@ -98,10 +98,16 @@
 </table>
 <button id="addItems">아이템추가</button>
 <script>
+    // $(document).ready(function () {}); 필수로 작성을 해야하는 것은 아님!!
+    // script 가 html 코드 아래에 있을 경우 상단에 스크립트를 사용할 경우
+    // 작성해주는 것이 안전
+    // 브라우저 버전이 낮은 브라우저 툴의 경우 $(document).ready(function () {});  작성하지 않으면
+    // 동작을 하지 않을 경우가 많음 / 안전하게 준비하자는 의미에서 사용 필수 X
     // addItems 버튼을 클릭해서 아이템 추가
-
-    // <tr>새로운 차</tr>
-
+    // <td>새로운 차</td>
+    $('#addItems').click(function () {
+        $('#addCar').append('<td>새로운 차</td>');
+    })
 </script>
 </body>
 </html>
