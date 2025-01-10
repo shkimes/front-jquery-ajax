@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>jQuery each pre</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 50%;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: aliceblue;
+        }
+
+        .odd {
+            background-color: yellowgreen;
+            color: green;
+        }
+        .even {
+            background-color: lightpink;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<h1>each 문 활용해서 테이블 기능 설정 </h1>
+<table id="itemTable">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>항목</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>리스트 항목 1</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>리스트 항목 2</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>리스트 항목 3</td>
+        </tr>
+    </tbody>
+</table>
+<button id="colorChange">테이블 색상 변경하기</button>
+
+<script>
+        // colorChange 버튼을 클릭했을 때 itemTable 내에서 tbody 내에 존재하는
+        // tr 태그 색상을 변경
+        // 홀수  = .odd  짝수 = .even 으로 색상 적용
+
+</script>
+</body>
+</html>
