@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>jQuery Ajax Loading</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+        body {
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #333;
+        }
+
+        header {
+            background-color: #ffccbc;
+            color: #333;
+            padding: 1.5em;
+            width: 100%;
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
+            letter-spacing: 2px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            width: 90%;
+            margin: 20px 0;
+        }
+
+        .gallery img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        button {
+            background-color: #ffab91;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1.2em;
+            margin: 20px 0;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            background-color: #ff8a65;
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+<header>🐾 고양이월드 🐾</header>
+<button id="loadMore">사진 더보기</button>
+<div class="gallery"></div>
+<script>
+    /*
+    익명함수 = 익명기능 = 기능명칭없음
+    특정 메서드(click, fadeIn, ... 등 내부에
+                function (){} 기능명칭없이 작성할 때 사용
+                기능이 재사용되는 것이 아닌 일회성
+    function  () {
+    }
+    */
+    $('#loadMore').click(
+
+            function () {
+                $.ajax({
+                    url: "https://api.thecatapi.com/v1/images/search?limit=10",
+                    method: 'GET',
+                    success:
+                        function (data) {
+                            $.each(data, function (num, cat) {
+                                $(".gallery").append(`<img src="${cat.url}">`);
+                            })
+                        },
+                    error:
+                        function () {
+                            alert("서버 연결에 문제가 있어 데이터를 가져올 수 없습니다.");
+                        }
+                })
+        }
+    )
+</script>
+</body>
+</html>
