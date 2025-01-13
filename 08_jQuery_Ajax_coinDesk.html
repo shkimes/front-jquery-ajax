@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jQuery_Ajax_coinDesk</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #f8effc, #ffe9e4);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        header {
+            background-color: #ffb3c6;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 2.2em;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+            margin-bottom: 20px;
+            color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .container {
+            background: #ffffff;
+            border: 2px solid #ffb3c6;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .container h2 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #ff6f91;
+        }
+
+        .container p {
+            font-size: 1em;
+            margin: 10px 0;
+            color: #555;
+        }
+
+        .container button {
+            background: linear-gradient(135deg, #ff9a9e, #fecfef);
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .container button:hover {
+            background: linear-gradient(135deg, #fecfef, #ff9a9e);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+
+        .container .disclaimer {
+            margin-top: 15px;
+            font-size: 0.9em;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+<header>코인조회사이트</header>
+<div class="container">
+    <h2>비트코인(BTC) 실시간 가격조회</h2>
+    <h4 id="nowTime"><strong>now time : </strong></h4>
+    <p id="usdPrise"> USD : --- </p>
+    <p id="gbpPrise"> GBP : --- </p>
+    <p id="eurPrise"> EUR : --- </p>
+    <button id="refreshPrice">가격 새로고침</button>
+    <p class="disclaimer">본 데이터는 CoinDesk Api 에서 제공되며, 실시간 데이터의 정확성을 보장하지 않습니다</p>
+</div>
+<script>
+    function bitcoinPrice(){
+        $.ajax({
+            url:"https://coindesk.com/v1/bpi/currentprice.json",
+            method:"GET",
+            success:
+                function(data){
+                $("#nowTime").text(data.time.updated); // 현재는 영국시간 기준으로 설정되어있음
+                // symbol 내에 작성되어있는 "symbol" 은 html 코드 형식이라서 text 로는 뜨지 않는다.
+                    // $("#usdPrice").text(`USD : ${data.bpi.USD.symbol}:${data.bpi.USD.rate}`)// 버튼을 누르면 usdPrice usd.rate 넣기
+                    $("#usdPrice").html(`USD :  ${data.bpi.USD.code}:${data.bpi.USD.symbol}:${data.bpi.USD.rate}`)// 버튼을 누르면 usdPrice usd.rate 넣기
+                    $("#usdPrise").append(`<p>$data.bpi.USD.description</p>`);
+                    // 버튼을 누르면 gbpPrice gbp.rate 넣기
+                    $("#gbpPrice").html(`GBP : ${data.bpi.USD.code}:${data.bpi.GBP.symbol}:${data.bpi.GBP.rate}`)// 버튼을 누르면 gbpPrice gbp.rate 넣기
+                    $("#gbpPrise").append(`<p>$data.bpi.GBP.description</p>`);
+                    // 버튼을 누르면 eurPrice eur.rate 넣기
+                    $("#eurPrice").html(`EUR : ${data.bpi.USD.code}:${data.bpi.EUR.symbol}:${data.bpi.EUR.rate}`)// 버튼을 누르면 eurPrice eur.rate 넣기
+                    $("#eurPrise").append(`<p>$data.bpi.EUR.description</p>`);
+                },
+            error :
+                    function(){
+                alert("비트코인을 불러오는데 실패했습니다")
+        }
+        });
+    }
+    // 초기가격 로딩
+    bitcoinPrice();
+    // 버튼 클릭 시 가격 새로고침
+    $("#refreshPrice").click(
+        function (){
+            bitcoinPrice();
+        }
+</script>
+</body>
+</html>
